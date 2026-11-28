@@ -4,6 +4,7 @@ import { dict, getLang } from '@/lib/i18n';
 import { S, telLink } from '@/lib/util';
 import ThemeToggle from './ThemeToggle';
 import LangToggle from './LangToggle';
+import HeaderNav from './HeaderNav';
 
 export default async function Shell({ children }: { children: React.ReactNode }) {
   const lang = await getLang();
@@ -13,21 +14,18 @@ export default async function Shell({ children }: { children: React.ReactNode })
   return (
     <>
       <header className="site">
-        <div className="container">
+        <div className="container hbar">
           <Link href="/" className="logo"><b>P</b><span>Pardhan Travels</span></Link>
-          <nav className="main" aria-label="Main">
-            <Link href="/#fleet">{t.nav.cars}</Link>
-            <Link href="/#fare">{t.nav.fares}</Link>
-            <Link href="/#routes">{t.nav.routes}</Link>
-            <Link href="/tours">{t.nav.tours}</Link>
-            <Link href="/#reviews">{t.nav.reviews}</Link>
-            <Link href="/#visit">{t.nav.contact}</Link>
-          </nav>
-          <div className="row" style={{ gap: 10 }}>
+          <HeaderNav
+            links={[
+              { href: '/#fleet', label: t.nav.cars }, { href: '/#fare', label: t.nav.fares }, { href: '/#routes', label: t.nav.routes },
+              { href: '/tours', label: t.nav.tours }, { href: '/#reviews', label: t.nav.reviews }, { href: '/#visit', label: t.nav.contact },
+            ]}
+            callHref={telLink(s)} callLabel={`${t.nav.call} ${phone}`} menuLabel="Menu"
+          >
             <LangToggle lang={lang} />
             <ThemeToggle />
-            <a href={telLink(s)} className="btn btn-amber btn-sm">{t.nav.call} {phone}</a>
-          </div>
+          </HeaderNav>
         </div>
       </header>
       {children}
